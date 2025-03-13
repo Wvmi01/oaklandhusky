@@ -14,45 +14,25 @@
         }
     
         h1 {
-            font-size: 45px;
-            margin-top: 20px;
+            font-size: 30px;
+            margin-top: 10px;
             color: #F0B7A3; /* Soft pastel peach */
         }
     
         h2 {
-            font-size: 22px;
+            font-size: 16px;
             color: #F0B7A3; /* Soft pastel peach */
         }
     
         .grid {
             display: grid;
-            grid-template-columns: repeat(5, 80px);
-            grid-gap: 10px;
-            justify-content: center;
-            margin: 50px auto;
-        }
-    
-        .grid div {
-            width: 80px;
-            height: 80px;
-            border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            background-color: #FFF8F3; /* Very light pastel pink */
-        }
-    
-        .keyboard {
-            display: grid;
-            grid-template-columns: repeat(10, 60px);
-            grid-gap: 10px;
+            grid-template-columns: repeat(5, 50px);
+            grid-gap: 6px;
             justify-content: center;
             margin: 30px auto;
         }
     
-        .keyboard div {
+        .grid div {
             width: 50px;
             height: 50px;
             border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
@@ -60,7 +40,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
+            font-size: 18px;
+            background-color: #FFF8F3; /* Very light pastel pink */
+        }
+    
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(10, 45px);
+            grid-gap: 6px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+    
+        .keyboard div {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
             cursor: pointer;
             background-color: #FFF8F3; /* Very light pastel pink */
         }
@@ -82,9 +82,9 @@
         }
     
         .button {
-            width: 80px;
-            height: 50px;
-            font-size: 20px;
+            width: 50px;
+            height: 35px;
+            font-size: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -96,13 +96,13 @@
     
         .button.enter,
         .button.del {
-            width: 160px;
+            width: 100px;
             grid-column: span 2;
             border: 5px solid #F6C9C4; /* Soft pastel peach */
         }
     
         .button.del {
-            margin-left: 30px;
+            margin-left: 20px;
         }
     
         .button:hover {
@@ -111,10 +111,10 @@
     
         .game-over {
             background-color: #FFF8F3; /* Light pastel pink */
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
-            width: 300px;
+            width: 80%;
             margin: 0;
             position: fixed;
             top: 50%;
@@ -126,62 +126,61 @@
         }
     
         .game-over h3 {
-            font-size: 30px;
+            font-size: 22px;
             color: #6A4C3C; /* Darker brown text */
         }
     
-        /* Mobile responsiveness */
-        @media (max-width: 600px) {
+        /* Mobile responsiveness for very small screens */
+        @media (max-width: 400px) {
             h1 {
-                font-size: 35px;
+                font-size: 25px;
             }
     
             h2 {
-                font-size: 18px;
+                font-size: 14px;
             }
     
             .grid {
-                grid-template-columns: repeat(5, 60px);
-                grid-gap: 8px;
+                grid-template-columns: repeat(5, 45px);
+                grid-gap: 4px;
             }
     
             .grid div {
-                width: 60px;
-                height: 60px;
-                font-size: 20px;
-            }
-    
-            .keyboard {
-                grid-template-columns: repeat(10, 50px);
-                grid-gap: 8px;
-            }
-    
-            .keyboard div {
                 width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-    
-            .button {
-                width: 70px;
                 height: 45px;
                 font-size: 16px;
             }
     
+            .keyboard {
+                grid-template-columns: repeat(10, 40px);
+                grid-gap: 4px;
+            }
+    
+            .keyboard div {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+    
+            .button {
+                width: 50px;
+                height: 35px;
+                font-size: 14px;
+            }
+    
             .button.enter,
             .button.del {
-                width: 140px;
+                width: 40px;
+             
             }
     
             .game-over {
-                width: 80%;
-                padding: 20px;
+                width: 90%;
+                padding: 15px;
             }
         }
-    </style>
-       
+    </style> 
 </head>
-<body>
 
 <h1>Wordle: Boots n' Beats!</h1>
 <h2>Black and White Ball Edition</h2>
@@ -218,8 +217,8 @@
     <div onclick="handleKeyClick('N')">N</div>
     <div onclick="handleKeyClick('M')">M</div>
 
-    <div class="button enter" onclick="submitGuess()">ENTER</div>
-    <div class="button del" onclick="deleteLetter()">DEL</div>
+    <div class="button enter" onclick="submitGuess()">Enter</div>
+    <div class="button del" onclick="deleteLetter()">Delete</div>
 </div>
 
 <div id="gameOver" class="game-over" style="display: none;">
