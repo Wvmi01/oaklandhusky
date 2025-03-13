@@ -10,19 +10,20 @@
             background-color: #F9E4D4; /* Light pastel peach background */
             text-align: center;
             color: #6A4C3C; /* Darker brown for text */
+            margin: 0;
         }
-
+    
         h1 {
-            font-size: 55px;
+            font-size: 45px;
             margin-top: 20px;
             color: #F0B7A3; /* Soft pastel peach */
         }
-
+    
         h2 {
-            font-size: 28px;
+            font-size: 22px;
             color: #F0B7A3; /* Soft pastel peach */
         }
-
+    
         .grid {
             display: grid;
             grid-template-columns: repeat(5, 80px);
@@ -30,7 +31,7 @@
             justify-content: center;
             margin: 50px auto;
         }
-
+    
         .grid div {
             width: 80px;
             height: 80px;
@@ -42,7 +43,7 @@
             font-size: 24px;
             background-color: #FFF8F3; /* Very light pastel pink */
         }
-
+    
         .keyboard {
             display: grid;
             grid-template-columns: repeat(10, 60px);
@@ -50,7 +51,7 @@
             justify-content: center;
             margin: 30px auto;
         }
-
+    
         .keyboard div {
             width: 50px;
             height: 50px;
@@ -59,27 +60,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             background-color: #FFF8F3; /* Very light pastel pink */
         }
-
+    
         .keyboard div:hover {
             background-color: #F0B7A3; /* Soft pastel peach on hover */
         }
-
+    
         .keyboard .correct {
             background-color: #A3F0B7; /* Green for correct letter */
         }
-
+    
         .keyboard .present {
             background-color: #F0E46A; /* Yellow for present letter */
         }
-
+    
         .keyboard .incorrect {
             background-color: #D9A8A1; /* Gray for incorrect letter */
         }
-
+    
         .button {
             width: 80px;
             height: 50px;
@@ -92,22 +93,22 @@
             background-color: #FFF8F3; /* Light pastel pink */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
+    
         .button.enter,
         .button.del {
             width: 160px;
             grid-column: span 2;
             border: 5px solid #F6C9C4; /* Soft pastel peach */
         }
-
+    
         .button.del {
             margin-left: 30px;
         }
-
+    
         .button:hover {
             background-color: #F0B7A3; /* Soft pastel peach on hover */
         }
-
+    
         .game-over {
             background-color: #FFF8F3; /* Light pastel pink */
             padding: 30px;
@@ -123,12 +124,62 @@
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
+    
         .game-over h3 {
             font-size: 30px;
             color: #6A4C3C; /* Darker brown text */
         }
+    
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 35px;
+            }
+    
+            h2 {
+                font-size: 18px;
+            }
+    
+            .grid {
+                grid-template-columns: repeat(5, 60px);
+                grid-gap: 8px;
+            }
+    
+            .grid div {
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+            }
+    
+            .keyboard {
+                grid-template-columns: repeat(10, 50px);
+                grid-gap: 8px;
+            }
+    
+            .keyboard div {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+    
+            .button {
+                width: 70px;
+                height: 45px;
+                font-size: 16px;
+            }
+    
+            .button.enter,
+            .button.del {
+                width: 140px;
+            }
+    
+            .game-over {
+                width: 80%;
+                padding: 20px;
+            }
+        }
     </style>
+       
 </head>
 <body>
 
