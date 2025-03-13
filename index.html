@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle: Boots n' Beats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F9E4D4; /* Light pastel peach background */
+            text-align: center;
+            color: #6A4C3C; /* Darker brown for text */
+        }
+
+        h1 {
+            font-size: 55px;
+            margin-top: 20px;
+            color: #F0B7A3; /* Soft pastel peach */
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #F0B7A3; /* Soft pastel peach */
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 80px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin: 50px auto;
+        }
+
+        .grid div {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            background-color: #FFF8F3; /* Very light pastel pink */
+        }
+
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(10, 60px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin: 30px auto;
+        }
+
+        .keyboard div {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: #FFF8F3; /* Very light pastel pink */
+        }
+
+        .keyboard div:hover {
+            background-color: #F0B7A3; /* Soft pastel peach on hover */
+        }
+
+        .keyboard .correct {
+            background-color: #A3F0B7; /* Green for correct letter */
+        }
+
+        .keyboard .present {
+            background-color: #F0E46A; /* Yellow for present letter */
+        }
+
+        .keyboard .incorrect {
+            background-color: #D9A8A1; /* Gray for incorrect letter */
+        }
+
+        .button {
+            width: 80px;
+            height: 50px;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: #FFF8F3; /* Light pastel pink */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .button.enter,
+        .button.del {
+            width: 160px;
+            grid-column: span 2;
+            border: 5px solid #F6C9C4; /* Soft pastel peach */
+        }
+
+        .button.del {
+            margin-left: 30px;
+        }
+
+        .button:hover {
+            background-color: #F0B7A3; /* Soft pastel peach on hover */
+        }
+
+        .game-over {
+            background-color: #FFF8F3; /* Light pastel pink */
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid #D9A8A1; /* Soft pastel pinkish border */
+            width: 300px;
+            margin: 0;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-over h3 {
+            font-size: 30px;
+            color: #6A4C3C; /* Darker brown text */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Wordle: Boots n' Beats!</h1>
+<h2>Black and White Ball Edition</h2>
+
+<div class="grid" id="grid"></div>
+
+<div class="keyboard" id="keyboard">
+    <div onclick="handleKeyClick('Q')">Q</div>
+    <div onclick="handleKeyClick('W')">W</div>
+    <div onclick="handleKeyClick('E')">E</div>
+    <div onclick="handleKeyClick('R')">R</div>
+    <div onclick="handleKeyClick('T')">T</div>
+    <div onclick="handleKeyClick('Y')">Y</div>
+    <div onclick="handleKeyClick('U')">U</div>
+    <div onclick="handleKeyClick('I')">I</div>
+    <div onclick="handleKeyClick('O')">O</div>
+    <div onclick="handleKeyClick('P')">P</div>
+
+    <div onclick="handleKeyClick('A')">A</div>
+    <div onclick="handleKeyClick('S')">S</div>
+    <div onclick="handleKeyClick('D')">D</div>
+    <div onclick="handleKeyClick('F')">F</div>
+    <div onclick="handleKeyClick('G')">G</div>
+    <div onclick="handleKeyClick('H')">H</div>
+    <div onclick="handleKeyClick('J')">J</div>
+    <div onclick="handleKeyClick('K')">K</div>
+    <div onclick="handleKeyClick('L')">L</div>
+
+    <div onclick="handleKeyClick('Z')">Z</div>
+    <div onclick="handleKeyClick('X')">X</div>
+    <div onclick="handleKeyClick('C')">C</div>
+    <div onclick="handleKeyClick('V')">V</div>
+    <div onclick="handleKeyClick('B')">B</div>
+    <div onclick="handleKeyClick('N')">N</div>
+    <div onclick="handleKeyClick('M')">M</div>
+
+    <div class="button enter" onclick="submitGuess()">ENTER</div>
+    <div class="button del" onclick="deleteLetter()">DEL</div>
+</div>
+
+<div id="gameOver" class="game-over" style="display: none;">
+    <h3 id="gameOverMessage"></h3>
+    <p>Word: <strong id="targetWord"></strong></p>
+    <p>Black and White Ball: Boots n' Beats Edition</p>
+    <p>March 13 @ Graduate School of Business</p>
+    <p>7:30 PM - 9:30 PM</p>
+    <p>PULL UP! :)</p>
+</div>
+
+<script>
+    let validWords = [];
+    // Load the word list using XMLHttpRequest
+    function loadWordList() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'wordlist.txt', true); // Adjust the path to your wordlist.txt file
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                validWords = xhr.responseText.split('\n').map(word => word.trim().toUpperCase());
+                console.log(validWords); // Check if words were loaded correctly
+                initializeGame();
+            }
+        };
+        xhr.send();
+    }
+
+    let targetWords = ["LASSO", "PARTY", "DISCO", "HUSKY", "HORSE"];
+    let targetWord = '';
+    let guess = '';
+    let guesses = [];
+    let currentGuessIndex = 0;
+    let gameOver = false;
+
+    function initializeGame() {
+        targetWord = targetWords[Math.floor(Math.random() * targetWords.length)];
+        render();
+    }
+
+    // Function to check if the guess is in the validWords list
+    function isValidGuess(word) {
+        return validWords.includes(word);
+    }
+
+    const grid = document.getElementById("grid");
+    for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 5; j++) {
+            const cell = document.createElement("div");
+            grid.appendChild(cell);
+        }
+    }
+
+    // Function to update the grid cells with the current guess
+    function updateGrid() {
+        const gridCells = grid.querySelectorAll("div");
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 5; j++) {
+                const cell = gridCells[i * 5 + j];
+                const letter = guesses[i] ? guesses[i][j] : (i === currentGuessIndex ? guess[j] : "");
+                cell.textContent = letter;
+                cell.style.backgroundColor = '#FFF8F3'; // Default empty cell color
+            }
+        }
+    }
+
+    // Function to color the grid cells based on the correctness of the letters
+    function colorGrid() {
+        const gridCells = grid.querySelectorAll("div");
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 5; j++) {
+                const cell = gridCells[i * 5 + j];
+                const letter = guesses[i] ? guesses[i][j] : "";
+                if (letter) {
+                    if (targetWord[j] === letter) {
+                        cell.style.backgroundColor = '#A3F0B7'; // Green for correct letter
+                    } else if (targetWord.includes(letter)) {
+                        cell.style.backgroundColor = '#F0E46A'; // Yellow for present letter
+                    } else {
+                        cell.style.backgroundColor = '#D9A8A1'; // Gray for incorrect letter
+                    }
+                }
+            }
+        }
+    }
+
+    function keyColor() {
+        // Update keyboard colors based on the guesses
+        const keys = document.querySelectorAll('.keyboard div');
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const letter = key.innerText;
+
+        // Reset all keys to default color
+        key.classList.remove('correct', 'present', 'incorrect');
+
+        // Apply the correct color based on the targetWord and guesses
+        for (let i = 0; i < currentGuessIndex; i++) {
+            for (let j = 0; j < 5; j++) {
+                if (guesses[i][j] === letter) {
+                    if (guesses[i][j] === targetWord[j]) {
+                        key.classList.add('correct');
+                    } else if (targetWord.includes(guesses[i][j])) {
+                        key.classList.add('present');
+                    } else {
+                        key.classList.add('incorrect');
+                    }
+                }
+            }
+        }
+    }
+    }
+
+    function render() {
+    if (gameOver) return; // Stop rendering if the game is over
+    updateGrid();
+    colorGrid();
+    keyColor();
+}
+
+
+    function handleKeyClick(letter) {
+        if (gameOver) return;
+        if (guess.length < 5) {
+            guess += letter;
+            updateGrid(); // Update the grid immediately after typing a letter
+        }
+    }
+    function submitGuess() {
+    if (guess.length !== 5) return;
+
+    if (!validWords.includes(guess)) {
+        alert("Not a valid word! Try again.");
+        return;
+    }
+
+    guesses[currentGuessIndex] = guess;
+    currentGuessIndex++;
+
+    if (guess === targetWord) {
+        gameOver = true;
+        document.getElementById("gameOverMessage").innerText = "You Win!";
+        document.getElementById("targetWord").innerText = targetWord; // Update the target word in the message
+        document.getElementById("gameOver").style.display = "block"; // Show the Game Over message
+        render();
+        return;
+    }
+
+    if (currentGuessIndex === 6) {
+        gameOver = true;
+        document.getElementById("gameOverMessage").innerText = "Game Over!";
+        document.getElementById("targetWord").innerText = targetWord; // Update the target word in the message
+        document.getElementById("gameOver").style.display = "block"; // Show the Game Over message
+        render();
+        return;
+    }
+
+    guess = '';
+    render();
+}
+
+
+    function deleteLetter() {
+        if (gameOver) return;
+        guess = guess.slice(0, -1);
+        updateGrid();
+    }
+
+    loadWordList(); // Start loading the word list
+</script>
+
+</body>
+</html>
