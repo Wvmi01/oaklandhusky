@@ -144,12 +144,34 @@
     </div>
 
     <script>
-        let targetWords = ["LASSO", "PARTY", "DISCO", "HUSKY", "HORSE"];
-        let targetWord = targetWords[Math.floor(Math.random() * targetWords.length)];
-        let guess = "";
-        let guesses = [];
-        let currentGuessIndex = 0;
-        let gameOver = false;
+// Modify to ensure word list is loaded first
+let validWords = [];
+let targetWords = ["LASSO", "PARTY", "DISCO", "HUSKY", "HORSE"];
+let targetWord = targetWords[Math.floor(Math.random() * targetWords.length)];
+let guess = "";
+let guesses = [];
+let currentGuessIndex = 0;
+let gameOver = false;
+
+function loadWordList() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'wordlist.txt', true); // Adjust the path to your wordlist.txt file
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            validWords = xhr.responseText.split('\n').map(word => word.trim().toUpperCase());
+            console.log(validWords); // Check if words were loaded correctly
+        }
+    };
+    xhr.send();
+}
+
+// Call this function to start the game
+loadWordList();
+
+// Function to check if the guess is in the validWords list
+function isValidGuess(word) {
+    return validWords.includes(word);
+}
 
         function createGrid() {
             const grid = document.getElementById("grid");
@@ -192,6 +214,11 @@
 
         function submitGuess() {
             if (guess.length !== 5) return;
+            if (!validWords.includes(guess)) {
+        alert("Not a valid word! Try again.");
+        return;
+    }
+
             guesses[currentGuessIndex] = guess;
             colorGrid();
             currentGuessIndex++;
